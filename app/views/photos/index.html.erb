@@ -1,9 +1,16 @@
 
+<%=link_to 'Add new pic'%>
+  <br>
+  <br>
+  <br>
+
+<h3>Click on picture to find out more!</h3>
+  <div class='container'>
 
 <% @photos.each do|photo|%>
-    <img src="<%=photo.image_link %>"height="300">
-<%=link_to image_tag(photo.image_link), photo_path(photo)%>
+
+
+    <%=link_to image_tag(photo.image_link, height:'200'), photo_path(photo)%>
 
   <%end%>
-
-  <%=link_to 'Add new pic'%>
+</div>

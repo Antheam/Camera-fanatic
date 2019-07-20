@@ -1,7 +1,7 @@
 
 <h3><%= @user.name+"\'s" + " " 'details' %> </h3>
   <% @albums.each do|album|%>
-  <h4>Album name: <%=album.name %></h4>
+  <h4>Album name: <%=link_to album.name, album_path(album) %></h4>
 <%end%>
 
 <h4>Camera used:</h4>
@@ -10,4 +10,3 @@
   <%= camera.model%>
   <%= camera.description%>
 <%end%>
-

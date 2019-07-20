@@ -6,7 +6,9 @@ class PhotosController < ApplicationController
     def show
         @photo = Photo.find(params[:id])
         @camera=@photo.camera
+    @like=Like.new
     end
+
 
     def new
         @photo=Photo.new
@@ -18,6 +20,7 @@ class PhotosController < ApplicationController
         # byebug
         redirect_to photo_path(@photo)
       end
+
 def destroy
   @photo =Photo.find(params[:id])
   @photo.destroy

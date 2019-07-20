@@ -1,7 +1,15 @@
 <h3>Picture details</h3>
 
 <img src="<%=@photo.image_link %>"height="300">
-    <%=link_to 'Show', photo_path(@photo)%>
+
 <div>Taken with:<%= @camera.model%><br></div>
 <div>Camera description: <%= @camera.description%></div>
 <%=link_to 'delete', photo_path(@photo), method: :delete  %> <br>
+
+<%=form_for @like do |f|%>
+<%=f.label :user%>
+<%=f.collection_select :user_id, User.all, :id, :name %>
+<%=f.hidden_field :photo_id,{value:@photo.id}%>
+<%=f.submit%>
+<%end%>
+<p>This photo has <%=@photo.likes.length%> likes</p>

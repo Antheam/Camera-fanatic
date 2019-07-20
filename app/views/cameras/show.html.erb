@@ -4,7 +4,7 @@
 <% @camera %>
 
   <h3><%=@camera.model %></h3>
-  <h4>This camera currently has<%=@camera.photo_count%></h4>
+  <h4>This camera currently has <%=@camera.photo_count%> pic(s)</h4>
   <h4><%=@camera.description %></h4>
   <h4><% @photos.each do |photo| %></h4>
   <img src="<%=photo.image_link%>"height="300">
@@ -12,11 +12,23 @@
 <%=link_to 'edit',edit_camera_path(@camera)%>
 <%=link_to 'delete',camera_path(@camera), method: :delete  %> <br>
 
-<%=link_to "Add images", cameras_path%>
-<%=link_to "Go back to home page", cameras_path%>
+<%=link_to "Go back to cameras", cameras_path%>
+
+<p>Add image to this camera</p>
  <%=form_for @photo do |f|%>
  <%=f.label :image_link %>
  <%=f.text_field :image_link%>
  <%=f.hidden_field :camera_id,{value:@camera.id}%>
  <%=f.submit "save"%>
+ <%end%>
+ <br>
+
+<h3>All reviews for this camera</h3>
+
+ <h4><% @comments.each do |comment| %></h4>
+ <p>Review from <%=@camera.user.name%></p>
+ <p>Rating:<%=comment.rating%> <br>
+   <%=comment.content%></P>
+
+
  <%end%>
