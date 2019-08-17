@@ -1,6 +1,8 @@
 class AlbumsController < ApplicationController
   def index
-    albums = Album.all
+    albums = Album.all.map do |album|
+      AlbumSerializer.new(album)
+    end
     if albums
       render json: {data: albums}, status: 200
     else
@@ -10,9 +12,8 @@ class AlbumsController < ApplicationController
 
   def show
     album = Album.find(params[:id])
-    photos = album.photos
     if album
-      render json: {data: {album: album, photos: photos}}, status: 200
+      render json: {data: {album: AlbumSerializer.new(album)}}, status: 200
     else
       render json: {data: 'No albums found'}, status: 404
     end
