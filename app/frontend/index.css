@@ -13,3 +13,20 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
 }
+
+h2 {
+  text-transform: capitalize;
+}
+
+.content-wrapper {
+  margin: 40px;
+}
+
+.photos {
+  position: absolute;
+  /* top: 350px; */
+  right: 10px;
+  top: 300px;
+  left: 400px;
+  /* max-width: 400px; */
+}

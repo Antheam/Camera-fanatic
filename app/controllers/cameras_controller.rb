@@ -46,7 +46,10 @@ class CamerasController < ApplicationController
   def update
     camera = Camera.find(params[:id])
     if camera.update(camera_params) and camera.save
-      render json: 
+      render json: {
+	  	  camera:camera
+	  } 
+	end
   end
 
   def destroy

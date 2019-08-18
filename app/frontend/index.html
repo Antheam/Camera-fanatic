@@ -1,8 +1,20 @@
 <!DOCTYPE html>
 <html>
+  <!-- <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script defer src="index.js"></script>
+  </head> -->
+  
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <script src="index.js"></script>
+    <!-- <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    /> -->
+    <link href="index.css" rel="stylesheet" />
+    <script defer src="./index.js"></script>
   </head>
   <body>
     <div class="jumbotron jumbotron-fluid">
@@ -10,11 +22,11 @@
         <h1 class="display-4">Welcome</h1>
         <p class="lead">This is a place to share your camera gear and photos</p>
 
-        <h1>All photos</h1>
-        <h3>Add new photo</h3>
+        <h1>All cameras</h1>
+        <h3>Add new camera</h3>
 
         <form id="form" class="input-name">
-          <label for="image">Image link</label>
+          <label for="image">Model make</label>
           <input type="text" name="name" />
           <label for="description">Description</label>
           <input type="text" name="description" />
@@ -24,8 +36,14 @@
         <br />
         <br />
         <!-- <button class="open_book">Show meal categories</button> -->
-        <div class="list"></div>
+        <div class="cameras"></div>
+        <div class='photos'></div>
       </div>
     </div>
+  </body>
+</html>
+      </div>
+    </div>
+    
   </body>
 </html>

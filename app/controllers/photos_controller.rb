@@ -1,15 +1,22 @@
 class PhotosController < ApplicationController
 
     def index
-        @photos=Photo.all
+        photos=Photo.all
+       render json: {data: {
+        photos: photos,
+      }}
     end
     def show
-        @photo = Photo.find(params[:id])
-        @camera=@photo.camera
-    @like=Like.new
+        photo = Photo.find(params[:id])
+        cameras = camera.photos
+        if photo
+    render json: {data:{photo: photos}}, status:200
+        else 
+          render json: {data:'no photos found'}, status:404
     end
+  end
 
-
+    
     def new
         @photo=Photo.new
     end

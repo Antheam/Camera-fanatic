@@ -1,41 +1,88 @@
-document.addEventListener("DOMContentLoaded", () => {
-  render(fetchAlbums())
+const cameraClass = document.querySelector(".cameras");
+const photoClass = document.querySelector(".photos");
+const addCameraBtn = document.querySelector("button");
+const modelMakeInput = document.querySelector("input[name=name]");
+const descriptionInput = document.querySelector("input[name=description]");
+
+addCameraBtn.addEventListener("click", function(e) {
+  formSubmit(event);
 });
 
-fetchAlbums = () => {
-  return fetch("http://localhost:3000/albums")
-    .then(response => {
-      return response.json();
-    })
-    .then(myJson => {
-        render(JSON.stringify(myJson));
-    });
-};
-
-
-render = (response) => {
-  response.data.map(album => {
-    const singleAlbum = createElement('div')
-    singleAlbum.innerHTML = `
-      <a href="/${album.id}">
-        <h1>${album.name}</h1>
-      </a>
-    `
-    appendElement(findElement(document, '.container'), singleAlbum)
-  })
+function formSubmit(event) {
+  event.preventDefault();
+  console.log("button clicked");
+  postcamera();
 }
-createElement = (element) => document.createElement(element)
 
-appendElement = (parent, child) => parent.appendChild(child)
+function postcamera() {
+  const configurationObject = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      user_id: 1,
+      model: `${modelMakeInput.value}`,
+      description: `${descriptionInput.value}`
+    })
+  };
+  return fetch("http://localhost:3000/cameras", configurationObject).then(
+    getCameras()
+  );
+}
 
-findElement = (location, selector) => location.querySelector(selector) src="<%=photo.image_link %>">
+document.addEventListener("DOMContentLoaded", () => {
+  getCameras();
+});
 
-<%=link_to 'See all albums',albums_path%>
-<%@albums.each do |album|%>
-<%=link_to album.name, album_path(album)%><br>
-            <%end%>
+function getCameras() {
+  return fetch("http://localhost:3000/cameras")
+    .then(resp => resp.json())
+    .then(cameras => addCameras(cameras));
 
-        {"data": [{"id": 1,"name":"holiday","user_id":1,"camera_id":2,"created_at":"2019-08-15T20:02:29.897Z",
-        "updated_at":"2019-08-15T20:02:29.897Z"},{"id": 2,"name":"greeny day","user_id":2,"camera_id":2,"created_at":
-        "2019-08-15T20:02:29.902Z","updated_at":"2019-08-15T20:02:29.902Z"},{"id": 3,"name":"Day trip out","user_id":2,
-            "camera_id":3,"created_at":"2019-08-15T20:02:29.907Z","updated_at":"2019-08-15T20:02:29.907Z"}]}
+  function addCameras(cameras) {
+    cameraClass.innerHTML = "";
+    cameras.data.forEach(camera => addCamera(camera));
+  }
+
+  function addCamera(camera) {
+    const model = document.createElement("h3");
+    const description = document.createElement("h4");
+
+    model.innerText = `${camera.model}`;
+    description.innerText = `${camera.description}`;
+    const showBtn = document.createElement("button");
+    showBtn.innerText = "See photos";
+    showBtn.dataset.id = `${camera.id}`;
+
+    cameraClass.appendChild(model);
+    cameraClass.appendChild(description);
+    cameraClass.appendChild(showBtn);
+
+    showBtn.addEventListener("click", function(e) {
+      getPhotos(event);
+    });
+  }
+
+  function fetchPhotos() {
+    return fetch("http://localhost:3000/photos").then(resp => resp.json());
+  }
+
+  function getPhotos(event) {
+    event.preventDefault();
+    fetchPhotos().then(pics => {
+      photoClass.innerHTML = "";
+      pics.data.photos
+        .filter(photo => photo.camera_id == event.target.dataset.id)
+        .forEach(photo => showPhoto(photo));
+    });
+  }
+
+  function showPhoto(photo) {
+    const image = document.createElement("img");
+    image.src = `${photo.image_link}`;
+    image.height = "150";
+    photoClass.appendChild(image);
+  }
+}
