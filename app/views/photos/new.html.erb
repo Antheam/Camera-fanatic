@@ -1,9 +1,0 @@
-<h1>Add Pic!</h1>
-<%= form_for @photo do |f| %>
-
-    <p><%= f.label :Image_link %> <br/>
-    <%= f.text_field :image_link %>
-    <%=f.collection_select :camera_id, Camera.all, :id, :model %>
-    <%= f.submit 'Add pic'%>
-  </p>
-  <%end%>

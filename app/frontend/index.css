@@ -1,8 +1,27 @@
+/* .my-container img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+  opacity: 0.6;
+}
 body {
   height: 100%;
   margin: 0;
-}
+} */
+/* 
+.my-container img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: auto;
+} */
 
+body {
+  background-image: url("./twink.jpg");
+}
 .bg {
   /* The image used */
   background-image: url("https://live.staticflickr.com/5120/14187717431_cbdf4500ba_k.jpg");
@@ -22,6 +41,11 @@ h2 {
   margin: 40px;
 }
 
+body {
+  position: relative;
+  left: 10px;
+}
+
 .photos {
   position: absolute;
   /* top: 350px; */
@@ -30,3 +54,16 @@ h2 {
   left: 400px;
   /* max-width: 400px; */
 }
+/* 
+h1 {
+  position: absolute;
+  left: 10px;
+} */
+/* body:not(.photos) {
+  position: absolute;
+  left: 10px;
+} */
+
+/* body {
+  background-color: #cac6e0;
+} */

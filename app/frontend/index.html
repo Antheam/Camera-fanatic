@@ -4,7 +4,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <script defer src="index.js"></script>
   </head> -->
-  
+  <style>
+    body {
+      background-image: url("./twink.jpg");
+    }
+  </style>
   <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <!-- <link
@@ -13,37 +17,56 @@
       integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
       crossorigin="anonymous"
     /> -->
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.css"
+    />
+
+    <!-- <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.5/css/bulma.min.css"
+    /> -->
     <link href="index.css" rel="stylesheet" />
-    <script defer src="./index.js"></script>
+    <script defer src="index.js"></script>
+    <script defer src="camera.js"></script>
+
   </head>
   <body>
-    <div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Welcome</h1>
+    <!-- <div class="my-container">
+          <img src="./natures.jpg">
+      </div> -->
+
+    
+        <h1>MoonBeam</h1>
         <p class="lead">This is a place to share your camera gear and photos</p>
 
         <h1>All cameras</h1>
-        <h3>Add new camera</h3>
 
-        <form id="form" class="input-name">
+        <button class="ui inverted teal basic button" id="newFrom">
+          Add new camera
+        </button>
+        <br />
+        <br />
+
+        <div class="new"></div>
+
+        <!-- <form id="form" class="new-form" style="display: none">
           <label for="image">Model make</label>
           <input type="text" name="name" />
           <label for="description">Description</label>
           <input type="text" name="description" />
           <button type="submit" class="btn">Submit</button>
-        </form>
+        </form> -->
+
         <br />
         <br />
         <br />
         <!-- <button class="open_book">Show meal categories</button> -->
         <div class="cameras"></div>
-        <div class='photos'></div>
+        <div class="photos"></div>
       </div>
     </div>
   </body>
 </html>
-      </div>
-    </div>
-    
-  </body>
-</html>
+

@@ -1,8 +1,0 @@
-<%@photos.each do |photo|%>
-<img src="<%=photo.image_link %>">
-<%end%>
-
-<%=link_to 'See all albums',albums_path%>
-<%@albums.each do |album|%>
-<%=link_to album.name, album_path(album)%><br>
-<%end%>

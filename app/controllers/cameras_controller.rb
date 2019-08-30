@@ -1,28 +1,32 @@
 class CamerasController < ApplicationController
 
   def index
-    if params[:search]
-      if cameras = Camera.search(params[:search]).order("created_at DESC")
-        render json: {data: cameras}, status: 200
-      end
-    else
-      render json: {data: Camera.all}, status: 200
-    end
+    # if params[:search]
+    #   if cameras = Camera.search(params[:search]).order("created_at DESC")
+    #     render json: {data: cameras}, status: 200
+    #   end
+    # else
+    #   render json: {data: Camera.all}, status: 200
+    # end
+
+    cameras = Camera.all
+    render json: {data: cameras}, status: 200
   end
 
   def show
     camera = Camera.find(params[:id])
     photos = camera.photos
-    comments = camera.comments
-    if camera and photos and comments
-      render json: {data: {
-        camera: camera,
-        photos: photos,
-        comments: comments
-      }}, status: 200
-    else
-      render json: {data: 'Not found'}, status: 404
-    end
+    render json: {data:{camera: camera, photos:photos}}, status: 200
+    # comments = camera.comments
+    # if camera and photos and comments
+    #   render json: {data: {
+    #     camera: camera,
+    #     photos: photos,
+    #     comments: comments
+    #   }}, status: 200
+    # else
+    #   render json: {data: 'Not found'}, status: 404
+    # end
   end
 
   def most_review

@@ -2,9 +2,8 @@ class PhotosController < ApplicationController
 
     def index
         photos=Photo.all
-       render json: {data: {
-        photos: photos,
-      }}
+       render json: photos
+      
     end
     def show
         photo = Photo.find(params[:id])
