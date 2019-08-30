@@ -8,7 +8,39 @@ const showFormBtn = document.querySelector("#newFrom");
 const modelInput = document.querySelector("#model");
 const DescriptionInput = document.querySelector("#description");
 
+const sortBtn = document.querySelector(".sortBtn");
 showFormBtn.addEventListener("click", addForm);
+
+sortBtn.addEventListener("click", e => {
+  console.log("button clicekd");
+  sortCameras();
+});
+
+function sortCameras() {
+  return fetch("http://localhost:3000/cameras")
+    .then(resp => resp.json())
+    .then(cameras => {
+      const sorted = sort(cameras);
+
+      addCameras(sorted);
+    });
+}
+
+function sort(cameras) {
+  cameras.data.sort(function(a, b) {
+    var nameA = a.model.toUpperCase(); // ignore upper and lowercase
+    var nameB = b.model.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+
+    // names must be equal
+    return 0;
+  });
+}
 
 function addForm() {
   const form = document.createElement("form");
@@ -39,59 +71,31 @@ function addForm() {
   form.addEventListener("submit", function(event) {
     event.preventDefault();
     console.log("button clicked");
-    postCamera(event); //THIS EVT MUST BE PASSED DOWN TO THE POST method AS IT CONTAINS THE DATA OF THE USER INPUT
+    postCamera(event);
   });
 }
-
-// function toggleForm() {
-//   if (form.style.display === "none") {
-//     form.style.display = "block";
-//   } else {
-//     form.style.display = "none";
-//   }
-// }
-
-// // inputCameraId.type = "hidden";
-// // inputCameraId.value = `${camera.id}`;
 
 document.addEventListener("DOMContentLoaded", () => {
   getCameras();
 });
 
 function addCamera(camera) {
-  const model = document.createElement("h3");
-  const description = document.createElement("h4");
-
-  model.innerText = `${camera.model}`;
-  description.innerText = `${camera.description}`;
-  const showBtn = document.createElement("button");
-  showBtn.innerText = "See photos";
-  showBtn.dataset.id = `${camera.id}`;
-  showBtn.className = "ui inverted teal basic button";
-
-  cameraClass.appendChild(model);
-  cameraClass.appendChild(description);
-  cameraClass.appendChild(showBtn);
-
-  showBtn.addEventListener("click", function(e) {
-    console.log("button clicked");
-    e.preventDefault();
-    form(event);
-
-    getPhotos(event);
-  });
+  const cam = new Camera(camera);
+  cam.render();
 }
 
 function form(event) {
-  // event.preventDefault();
+  event.preventDefault();
   const cameraForm = document.createElement("form");
   const imageInput = document.createElement("input");
   imageInput.placeholder = "Add image link";
   const imageButton = document.createElement("button");
+  imageButton.innerText = "Save";
   imageButton.type = "submit";
   photoClass.append(cameraForm);
   photoClass.append(imageInput);
 }
+
 function getPhotos(event) {
   event.preventDefault();
 
@@ -99,25 +103,9 @@ function getPhotos(event) {
     .then(resp => resp.json())
     .then(cameras => {
       photoClass.innerHTML = "";
-      cameras.data.photos.forEach(photo => showPhoto(photo));
+      cameras.photos.forEach(photo => showPhoto(photo));
     });
 }
-// fetchPhotos().then(pics => {
-//   photoClass.innerHTML = "";
-//   pics.data.photos
-//     .filter(photo => photo.camera_id == event.target.dataset.id)
-//     .forEach(photo => showPhoto(photo));
-// });
-// }
-// function getPhotos(event) {
-//   event.preventDefault();
-//   fetchPhotos().then(pics => {
-//     photoClass.innerHTML = "";
-//     pics.data.photos
-//       .filter(photo => photo.camera_id == event.target.dataset.id)
-//       .forEach(photo => showPhoto(photo));
-//   });
-// }
 
 function showPhoto(photo) {
   const image = document.createElement("img");

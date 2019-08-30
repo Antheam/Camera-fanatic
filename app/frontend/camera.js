@@ -3,9 +3,8 @@ class Camera {
     this.id = camera.id;
     this.model = camera.model;
     this.description = camera.description;
-    this.create();
   }
-  create() {
+  render() {
     const model = document.createElement("h3");
     const description = document.createElement("h4");
 
