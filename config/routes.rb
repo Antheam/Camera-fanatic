@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'cameras/most_review', to: 'cameras#most_review', as: 'most_review'
   post 'login' => 'sessions#create'
   get '/login', to: 'sessions#new'
+  post '/add_photos' => 'photos#new'
   resources :comments
   resources :cameras
   resources :photos

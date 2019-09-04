@@ -5,14 +5,16 @@ class Camera {
     this.description = camera.description;
   }
   render() {
-    const model = document.createElement("h3");
-    const description = document.createElement("h4");
+    let model = document.createElement("h3");
+    let description = document.createElement("h4");
 
     model.innerText = `${this.model}`;
+    model.className = `${this.id}`;
     description.innerText = `${this.description}`;
-    const showBtn = document.createElement("button");
+    let showBtn = document.createElement("button");
     showBtn.innerText = "See photos";
     showBtn.dataset.id = `${this.id}`;
+
     showBtn.className = "ui inverted teal basic button";
 
     cameraClass.appendChild(model);
@@ -22,6 +24,7 @@ class Camera {
     showBtn.addEventListener("click", function(e) {
       console.log("button clicked");
       getPhotos(event);
+      //   imageForm(event);
     });
   }
 }

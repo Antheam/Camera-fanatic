@@ -50,7 +50,7 @@ body {
   position: absolute;
   /* top: 350px; */
   right: 10px;
-  top: 300px;
+  top: 320px;
   left: 400px;
   /* max-width: 400px; */
 }
@@ -67,3 +67,14 @@ h1 {
 /* body {
   background-color: #cac6e0;
 } */
+
+#photoForm {
+  width: 250px;
+  height: 27px;
+}
+
+#moveForm {
+  position: absolute;
+  top: 260px;
+  left: 400px;
+}

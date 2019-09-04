@@ -1,4 +1,4 @@
-const cameraClass = document.querySelector(".cameras");
+let cameraClass = document.querySelector(".cameras");
 const photoClass = document.querySelector(".photos");
 const addCameraBtn = document.querySelector(".btn");
 
@@ -8,7 +8,7 @@ const showFormBtn = document.querySelector("#newFrom");
 const modelInput = document.querySelector("#model");
 const DescriptionInput = document.querySelector("#description");
 
-const sortBtn = document.querySelector(".sortBtn");
+const sortBtn = document.querySelector("#sortBtn");
 showFormBtn.addEventListener("click", addForm);
 
 sortBtn.addEventListener("click", e => {
@@ -20,16 +20,14 @@ function sortCameras() {
   return fetch("http://localhost:3000/cameras")
     .then(resp => resp.json())
     .then(cameras => {
-      const sorted = sort(cameras);
-
-      addCameras(sorted);
+      let sorted = sort(cameras);
     });
 }
 
 function sort(cameras) {
   cameras.data.sort(function(a, b) {
-    var nameA = a.model.toUpperCase(); // ignore upper and lowercase
-    var nameB = b.model.toUpperCase(); // ignore upper and lowercase
+    let nameA = a.model.toUpperCase(); // ignore upper and lowercase
+    let nameB = b.model.toUpperCase(); // ignore upper and lowercase
     if (nameA < nameB) {
       return -1;
     }
@@ -40,15 +38,16 @@ function sort(cameras) {
     // names must be equal
     return 0;
   });
+  addCameras(cameras);
 }
 
 function addForm() {
-  const form = document.createElement("form");
-  const inputOne = document.createElement("input");
-  const labelOne = document.createElement("label");
-  const inputTwo = document.createElement("input");
-  const labelTwo = document.createElement("label");
-  const button = document.createElement("button");
+  let form = document.createElement("form");
+  let inputOne = document.createElement("input");
+  let labelOne = document.createElement("label");
+  let inputTwo = document.createElement("input");
+  let labelTwo = document.createElement("label");
+  let button = document.createElement("button");
   button.innerText = "Add camera";
 
   labelOne.innerText = "Model Make";
@@ -80,21 +79,21 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function addCamera(camera) {
-  const cam = new Camera(camera);
+  let cam = new Camera(camera);
   cam.render();
 }
 
-function form(event) {
-  event.preventDefault();
-  const cameraForm = document.createElement("form");
-  const imageInput = document.createElement("input");
-  imageInput.placeholder = "Add image link";
-  const imageButton = document.createElement("button");
-  imageButton.innerText = "Save";
-  imageButton.type = "submit";
-  photoClass.append(cameraForm);
-  photoClass.append(imageInput);
-}
+// function form(event) {
+//   event.preventDefault();
+//   let cameraForm = document.createElement("form");
+//   let imageInput = document.createElement("input");
+//   imageInput.placeholder = "Add image link";
+//   let imageButton = document.createElement("button");
+//   imageButton.innerText = "Save";
+//   imageButton.type = "submit";
+//   photoClass.append(cameraForm);
+//   photoClass.append(imageInput);
+// }
 
 function getPhotos(event) {
   event.preventDefault();
@@ -104,11 +103,55 @@ function getPhotos(event) {
     .then(cameras => {
       photoClass.innerHTML = "";
       cameras.photos.forEach(photo => showPhoto(photo));
+      appendNewPhotoForm(event.target.dataset.id);
     });
 }
 
+function appendNewPhotoForm(cameraId) {
+  let imageForm = document.createElement("form");
+  imageForm.className = "ui form";
+  imageForm.id = "moveForm";
+
+  let imageInput = document.createElement("input");
+  imageInput.placeholder = "Add image link";
+  imageInput.name = "image";
+  imageInput.className = "field";
+  imageInput.id = "photoForm";
+  let imageB = document.createElement("button");
+  imageB.innerText = "Save";
+  imageB.type = "submit";
+  imageB.className = "mini ui button";
+
+  // button.type = "submit";
+  imageForm.append(imageInput);
+  imageForm.append(imageB);
+  document.body.append(imageForm);
+
+  imageForm.addEventListener("submit", e => {
+    e.preventDefault();
+    var newInput = document.getElementById("photoForm");
+    console.log("button clicked");
+    console.log(`${newInput.value}`);
+    postPic((input = newInput.value), cameraId);
+  });
+}
+
+// function imageFormorm(event) {
+//   event.preventDefault();
+
+//   let imageF = document.createElement("form");
+//   let imageInput = document.createElement("input");
+//   imageI.placeholder = "Save image link";
+//   let imageB = document.createElement("button");
+//   imageB.innerText = "Save";
+//   // button.type = "submit";
+//   photoClass.prepend(imageF);
+//   photoClass.prepend(imageI);
+//   photoClass.prepend(imageB);
+// }
+
 function showPhoto(photo) {
-  const image = document.createElement("img");
+  let image = document.createElement("img");
   image.src = `${photo.image_link}`;
   image.height = "170";
   photoClass.appendChild(image);
@@ -117,20 +160,20 @@ function showPhoto(photo) {
 // //-----------fetches--------------
 
 function getCameras() {
-  return fetch("http://localhost:3000/cameras")
+  fetch("http://localhost:3000/cameras")
     .then(resp => resp.json())
     .then(resp => {
       console.log(resp.data);
-      addCameras(resp.data);
+      addCameras(resp);
     });
 }
 function addCameras(cameras) {
   cameraClass.innerHTML = "";
-  cameras.forEach(camera => addCamera(camera));
+  cameras.data.forEach(camera => addCamera(camera));
 }
 
 function postCamera(event) {
-  const configurationObject = {
+  let configurationObject = {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -149,16 +192,22 @@ function postCamera(event) {
   );
 }
 
-// function fetchPhotos() {
-//   return fetch("http://localhost:3000/photos").then(resp => resp.json());
-// }
-
-// function getPhotos(event) {
-//   event.preventDefault();
-//   fetchPhotos().then(pics => {
-//     photoClass.innerHTML = "";
-//     pics.data.photos
-//       .filter(photo => photo.camera_id == event.target.dataset.id)
-//       .forEach(photo => showPhoto(photo));
-//   });
-// }
+function postPic(input, cameraId) {
+  let configurationObject = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      camera_id: `${cameraId}`,
+      image_link: `${input}`,
+      album_id: 2
+    })
+  };
+  return fetch("http://localhost:3000/photos", configurationObject).then(
+    resp => {
+      getPhotos(resp);
+    }
+  );
+}

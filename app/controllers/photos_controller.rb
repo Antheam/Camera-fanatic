@@ -17,15 +17,19 @@ class PhotosController < ApplicationController
 
     
     def new
-        @photo=Photo.new
+        photo=Photo.new
+        render json: photo
     end
+
     def create
-        @photo = Photo.new(photo_params)
-        @photo.album = Album.all.sample
-        @photo.save
-        # byebug
-        redirect_to photo_path(@photo)
+      photo = Photo.new(photo_params)
+      if photo.save
+        render json: {data: photo}, status: 200
+      else
+        render json: {data: 'Failed to save'}, status: 500
       end
+    end
+
 
 def destroy
   @photo =Photo.find(params[:id])
@@ -36,5 +40,5 @@ end
 end
 private
 def photo_params
-  params.require(:photo).permit(:image_link, :camera_id)
+  params.require(:photo).permit(:image_link, :camera_id, :album_id)
 end
