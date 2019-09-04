@@ -192,6 +192,26 @@ function postCamera(event) {
   );
 }
 
+// function postPic(input, cameraId) {
+//   let configurationObject = {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       Accept: "application/json"
+//     },
+//     body: JSON.stringify({
+//       camera_id: `${cameraId}`,
+//       image_link: `${input}`,
+//       album_id: 2
+//     })
+//   };
+//   return fetch("http://localhost:3000/photos", configurationObject).then(
+//     resp => {
+//       getPhotos(resp);
+//     }
+//   );
+// }
+
 function postPic(input, cameraId) {
   let configurationObject = {
     method: "POST",
@@ -205,9 +225,9 @@ function postPic(input, cameraId) {
       album_id: 2
     })
   };
-  return fetch("http://localhost:3000/photos", configurationObject).then(
-    resp => {
-      getPhotos(resp);
-    }
+  return fetch("http://localhost:3000/photos", configurationObject).then(resp =>
+    resp.json().then(photo => {
+      showPhoto(photo.data);
+    })
   );
 }
