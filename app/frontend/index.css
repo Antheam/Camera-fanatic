@@ -21,10 +21,11 @@ body {
 
 body {
   background-image: url("./twink.jpg");
+  height: 100px;
 }
 .bg {
   /* The image used */
-  background-image: url("https://live.staticflickr.com/5120/14187717431_cbdf4500ba_k.jpg");
+  /* background-image: url("https://live.staticflickr.com/5120/14187717431_cbdf4500ba_k.jpg"); */
   /* Full height */
   height: 100%;
   /* Center and scale the image nicely */
@@ -77,4 +78,11 @@ h1 {
   position: absolute;
   top: 260px;
   left: 400px;
+}
+
+#sortimage {
+  height: 36px;
+  position: relative;
+  top: 13px;
+  right: 10px;
 }
